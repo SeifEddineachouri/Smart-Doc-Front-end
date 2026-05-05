@@ -1,0 +1,197 @@
+<main class="workspace-page">
+  <section class="workspace-shell">
+    <aside class="sidebar" [attr.aria-label]="'chat.sidebar.aria' | translate">
+      <div class="sidebar-brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-name">{{ 'common.brand' | translate }}</span>
+      </div>
+
+      <button type="button" class="sidebar-new" (click)="startNewSession()">
+        <span class="sidebar-plus" aria-hidden="true">+</span>
+        {{ 'chat.sidebar.newChat' | translate }}
+      </button>
+
+      <div class="sidebar-search">
+        <input
+          type="search"
+          [placeholder]="'chat.sidebar.searchPlaceholder' | translate"
+          [attr.aria-label]="'chat.sidebar.searchPlaceholder' | translate"
+        />
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">{{ 'chat.sessions.title' | translate }}</p>
+        @if (isSessionsLoading()) {
+          <p class="hint">{{ 'chat.sessions.loading' | translate }}</p>
+        } @else if (sessionsError()) {
+          <p class="error">{{ sessionsError() }}</p>
+        } @else if (sessions().length === 0) {
+          <p class="hint">{{ 'chat.sessions.empty' | translate }}</p>
+        } @else {
+          <ul class="session-list" [attr.aria-label]="'chat.sessions.aria' | translate">
+            @for (session of sessions(); track session.id) {
+              <li class="session-row">
+                <button
+                  type="button"
+                  class="session-item"
+                  [class.active]="session.id === activeSessionId()"
+                  (click)="selectSession(session)"
+                >
+                  <span class="session-title">{{ session.name || ('chat.sessions.untitled' | translate) }}</span>
+                  <span class="session-meta">{{ session.lastQuestion || ('chat.sessions.noQuestions' | translate) }}</span>
+                </button>
+                <button type="button" class="session-archive" (click)="archiveSession(session, $event)">
+                  {{ 'chat.sessions.archive' | translate }}
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </aside>
+
+    <div class="workspace-main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">{{ 'chat.brand' | translate }}</p>
+          <h1>{{ 'chat.title' | translate }}</h1>
+          <p class="subtitle">{{ 'chat.subtitle' | translate }}</p>
+        </div>
+        @if (!isAuthenticated()) {
+          <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
+            <a routerLink="/sign-in">{{ 'auth.signIn.submit' | translate }}</a>
+            <a routerLink="/sign-up">{{ 'auth.signUp.submit' | translate }}</a>
+          </nav>
+        } @else {
+          <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
+            <button type="button" class="topbar-action" [disabled]="isSigningOut()" (click)="signOut()">
+              @if (isSigningOut()) {
+                {{ 'auth.signOutSubmitting' | translate }}
+              } @else {
+                {{ 'auth.signOut' | translate }}
+              }
+            </button>
+          </nav>
+        }
+      </header>
+
+      <section class="grid-layout" [attr.aria-label]="'chat.dashboardAria' | translate">
+        <article class="panel uploader" id="upload-panel">
+          <h2>{{ 'chat.steps.upload' | translate }}</h2>
+          <label
+            class="dropzone"
+            [class.drag-over]="isDragOver()"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onDrop($event)"
+          >
+            <input type="file" multiple (change)="onFileSelected($event)" />
+            <strong>{{ 'chat.upload.dragTitle' | translate }}</strong>
+            <span>{{ 'chat.upload.dragHint' | translate }}</span>
+          </label>
+
+          @if (uploadedDocuments().length > 0) {
+            <ul class="doc-list" [attr.aria-label]="'chat.upload.uploadedAria' | translate">
+              @for (doc of uploadedDocuments(); track doc.id) {
+                <li>
+                  <div>
+                    <p class="doc-name">{{ doc.name }}</p>
+                    <p class="doc-meta">{{ doc.size }} - {{ doc.mimeType }}</p>
+                  </div>
+                  <button type="button" class="ghost" (click)="removeDocument(doc.id)">
+                    {{ 'chat.upload.remove' | translate }}
+                  </button>
+                </li>
+              }
+            </ul>
+
+            @if (isUploadInProgress()) {
+              <p class="hint">{{ 'chat.upload.uploading' | translate }}</p>
+            }
+          } @else {
+            <p class="hint">{{ 'chat.upload.none' | translate }}</p>
+          }
+        </article>
+
+        <article class="panel controls" id="ask-panel">
+          <h2>{{ 'chat.steps.ask' | translate }}</h2>
+          <form [formGroup]="questionForm" (ngSubmit)="askAi()" novalidate>
+            <label class="field">
+              <span>{{ 'chat.form.questionLabel' | translate }}</span>
+              <textarea
+                formControlName="question"
+                rows="5"
+                [placeholder]="'chat.form.questionPlaceholder' | translate"
+              ></textarea>
+            </label>
+
+            @if (questionForm.controls.question.invalid && questionForm.controls.question.touched) {
+              <p class="error">{{ 'chat.form.questionError' | translate }}</p>
+            }
+
+            @if (askError()) {
+              <p class="error">{{ askError() }}</p>
+            }
+
+            <button type="submit" [disabled]="isAsking() || isUploadInProgress() || selectedDocuments().length === 0">
+              @if (isAsking()) {
+                {{ 'chat.form.asking' | translate }}
+              } @else {
+                {{ 'chat.form.submit' | translate }}
+              }
+            </button>
+          </form>
+        </article>
+
+        <article class="panel output" id="answers-panel">
+          <h2>{{ 'chat.steps.answers' | translate }}</h2>
+          @if (aiAnswers().length > 0) {
+            <ul class="draft-list" [attr.aria-label]="'chat.output.answersAria' | translate">
+              @for (draft of aiAnswers(); track draft.title) {
+                <li>
+                  <p class="draft-type">{{ draft.type }}</p>
+                  <h3>{{ draft.title }}</h3>
+                  <p>{{ draft.summary }}</p>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="hint">{{ 'chat.output.empty' | translate }}</p>
+          }
+        </article>
+
+        <article class="panel history-panel-main" id="history-panel">
+          <h2>{{ 'chat.history.title' | translate }}</h2>
+
+          @if (isHistoryLoading()) {
+            <p class="hint">{{ 'chat.history.loading' | translate }}</p>
+          } @else if (historyError()) {
+            <p class="error">{{ historyError() }}</p>
+          } @else if (historyItems().length === 0) {
+            <p class="hint">{{ 'chat.history.empty' | translate }}</p>
+          } @else {
+            <ul class="history-list" [attr.aria-label]="'chat.history.aria' | translate">
+              @for (item of historyItems(); track item.id) {
+                <li>
+                  <p class="history-date">{{ formatHistoryDate(item.createdAt) }}</p>
+                  <p class="history-question">{{ item.question }}</p>
+                  <p class="history-answer">{{ item.answer }}</p>
+                </li>
+              }
+            </ul>
+
+            @if (hasMoreHistory()) {
+              <button type="button" class="load-more" [disabled]="isHistoryLoadingMore()" (click)="loadMoreHistory()">
+                @if (isHistoryLoadingMore()) {
+                  {{ 'chat.history.loadingMore' | translate }}
+                } @else {
+                  {{ 'chat.history.loadMore' | translate }}
+                }
+              </button>
+            }
+          }
+        </article>
+      </section>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,123 @@
+{
+  "common": {
+    "brand": "SmartDoc",
+    "language": "Langue",
+    "langEnglish": "Passer la langue en anglais",
+    "langFrench": "Passer la langue en francais"
+  },
+  "auth": {
+    "signOut": "Deconnecter",
+    "signOutSubmitting": "Deconnexion...",
+    "common": {
+      "emailPlaceholder": "vous@entreprise.com",
+      "passwordPlaceholder": "Au moins 8 caracteres",
+      "passwordError": "Le mot de passe doit contenir au moins 8 caracteres."
+    },
+    "signIn": {
+      "languageAria": "Selecteur de langue",
+      "title": "Bon retour",
+      "lead": "Connectez-vous pour continuer a creer des brouillons juridiques et professionnels a partir de vos documents source.",
+      "emailLabel": "E-mail",
+      "emailError": "Entrez une adresse e-mail valide.",
+      "passwordLabel": "Mot de passe",
+      "rememberMe": "Rester connecte",
+      "submitting": "Connexion en cours...",
+      "submit": "Se connecter",
+      "switchText": "Nouveau sur SmartDoc ?",
+      "switchAction": "Creer un compte"
+    },
+    "signUp": {
+      "languageAria": "Selecteur de langue",
+      "title": "Creez votre espace",
+      "lead": "Configurez votre compte pour televerser des documents source et generer des brouillons soignes en quelques minutes.",
+      "fullNameLabel": "Nom complet",
+      "fullNamePlaceholder": "Alyah Morgan",
+      "fullNameError": "Veuillez saisir votre nom.",
+      "workEmailLabel": "E-mail professionnel",
+      "workEmailError": "Un e-mail valide est requis.",
+      "passwordLabel": "Mot de passe",
+      "terms": "J'accepte les Conditions et la Politique de confidentialite.",
+      "termsError": "Vous devez accepter les conditions pour continuer.",
+      "submitting": "Creation du compte...",
+      "submit": "Creer un compte",
+      "switchText": "Vous avez deja un compte ?",
+      "switchAction": "Se connecter",
+      "passwordStrength": {
+        "label": "Solidite du mot de passe",
+        "weak": "Faible",
+        "moderate": "Moyen",
+        "strong": "Fort"
+      }
+    }
+  },
+  "chat": {
+    "brand": "Assistant SmartDoc",
+    "title": "Posez vos questions a l'IA sur vos documents",
+    "subtitle": "Televersez vos fichiers puis posez des questions pour obtenir des reponses immediates basees sur vos documents.",
+    "authLinksAria": "Liens d'authentification",
+    "dashboardAria": "Tableau de bord de questions-reponses documentaires",
+    "steps": {
+      "upload": "1. Televerser les documents source",
+      "ask": "2. Poser votre question",
+      "answers": "3. Reponses de l'IA"
+    },
+    "upload": {
+      "dragTitle": "Glissez-deposez vos fichiers ici",
+      "dragHint": "ou cliquez pour selectionner des PDF, documents Word ou fichiers texte",
+      "uploading": "Televersement en cours. Veuillez patienter avant de poser votre question.",
+      "uploadedAria": "Documents televerses",
+      "remove": "Retirer",
+      "unknownType": "Type inconnu",
+      "none": "Aucun fichier ajoute pour le moment."
+    },
+    "form": {
+      "questionLabel": "Quelle question voulez-vous poser ?",
+      "questionPlaceholder": "Exemple : Quelles obligations manquent dans ce projet de contrat et que faut-il confirmer avec le client ?",
+      "questionError": "La question doit contenir au moins 8 caracteres.",
+      "userIdMissing": "Votre session est incomplete. Veuillez vous reconnecter.",
+      "waitUpload": "Veuillez attendre la fin du televersement avant de poser votre question.",
+      "askError": "Impossible d'obtenir une reponse de l'IA pour le moment. Veuillez reessayer.",
+      "asking": "Analyse des documents...",
+      "submit": "Interroger l'IA"
+    },
+    "output": {
+      "answersAria": "Cartes de reponses IA",
+      "empty": "Les reponses de l'IA apparaitront ici apres votre question."
+    },
+    "history": {
+      "title": "Historique recent",
+      "aria": "Historique des conversations",
+      "loading": "Chargement de l'historique...",
+      "loadingMore": "Chargement en cours...",
+      "loadMore": "Charger plus",
+      "empty": "Aucun historique pour le moment.",
+      "loadError": "Impossible de charger l'historique. Veuillez reessayer."
+    },
+    "sidebar": {
+      "aria": "Menu de chat",
+      "newChat": "Nouveau chat",
+      "searchPlaceholder": "Rechercher des discussions"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "aria": "Sessions de chat",
+      "loading": "Chargement des sessions...",
+      "empty": "Aucune session pour le moment.",
+      "untitled": "Session sans titre",
+      "noQuestions": "Aucune question pour le moment",
+      "archive": "Archiver",
+      "noActive": "Demarrez un nouveau chat pour televerser des documents."
+    },
+    "generated": {
+      "directTitle": "Reponse directe",
+      "directType": "Reponse",
+      "directBody": "D'apres {{count}} fichier(s) televerses, voici une reponse concise a votre question : \"{{question}}\".",
+      "keyPointsTitle": "Elements justificatifs",
+      "keyPointsType": "Points cles",
+      "keyPointsBody": "L'IA met en avant les references et clauses trouvees dans vos documents televerses.",
+      "followTitle": "Suggestion de suivi",
+      "followType": "Question suivante",
+      "followBody": "Demandez un resume des risques, les informations manquantes ou une explication clause par clause pour aller plus loin."
+    }
+  }
+}

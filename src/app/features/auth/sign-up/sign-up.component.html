@@ -1,0 +1,78 @@
+<main class="auth-page">
+  <section class="auth-card" aria-labelledby="sign-up-title">
+    <fieldset class="lang-picker" [attr.aria-label]="'auth.signUp.languageAria' | translate">
+      <button
+        type="button"
+        class="flag-btn"
+        [class.active]="currentLang() === 'en'"
+        (click)="selectLanguage('en')"
+        [attr.aria-label]="'common.langEnglish' | translate"
+      >
+        <span aria-hidden="true" class="flag-icon fi-us"></span>
+        <span>EN</span>
+      </button>
+      <button
+        type="button"
+        class="flag-btn"
+        [class.active]="currentLang() === 'fr'"
+        (click)="selectLanguage('fr')"
+        [attr.aria-label]="'common.langFrench' | translate"
+      >
+        <span aria-hidden="true" class="flag-icon fi-fr"></span>
+        <span>FR</span>
+      </button>
+    </fieldset>
+
+    <p class="eyebrow">{{ 'common.brand' | translate }}</p>
+    <h1 id="sign-up-title">{{ 'auth.signUp.title' | translate }}</h1>
+    <p class="lead">{{ 'auth.signUp.lead' | translate }}</p>
+
+    <form class="auth-form" [formGroup]="signUpForm" (ngSubmit)="submit()" novalidate>
+      <label class="field">
+        <span>{{ 'auth.signUp.fullNameLabel' | translate }}</span>
+        <input type="text" formControlName="fullName" autocomplete="name" [placeholder]="'auth.signUp.fullNamePlaceholder' | translate" />
+      </label>
+      @if (signUpForm.controls.fullName.invalid && signUpForm.controls.fullName.touched) {
+        <p class="error">{{ 'auth.signUp.fullNameError' | translate }}</p>
+      }
+
+      <label class="field">
+        <span>{{ 'auth.signUp.workEmailLabel' | translate }}</span>
+        <input type="email" formControlName="workEmail" autocomplete="email" [placeholder]="'auth.common.emailPlaceholder' | translate" />
+      </label>
+      @if (signUpForm.controls.workEmail.invalid && signUpForm.controls.workEmail.touched) {
+        <p class="error">{{ 'auth.signUp.workEmailError' | translate }}</p>
+      }
+
+      <label class="field">
+        <span>{{ 'auth.signUp.passwordLabel' | translate }}</span>
+        <input type="password" formControlName="password" autocomplete="new-password" [placeholder]="'auth.common.passwordPlaceholder' | translate" />
+      </label>
+      <p class="strength">{{ 'auth.signUp.passwordStrength.label' | translate }}: <strong>{{ passwordStrength() | translate }}</strong></p>
+      @if (signUpForm.controls.password.invalid && signUpForm.controls.password.touched) {
+        <p class="error">{{ 'auth.common.passwordError' | translate }}</p>
+      }
+
+      <label class="check-field">
+        <input type="checkbox" formControlName="acceptedTerms" />
+        <span>{{ 'auth.signUp.terms' | translate }}</span>
+      </label>
+      @if (signUpForm.controls.acceptedTerms.invalid && signUpForm.controls.acceptedTerms.touched) {
+        <p class="error">{{ 'auth.signUp.termsError' | translate }}</p>
+      }
+
+      <button type="submit" [disabled]="isSubmitting()">
+        @if (isSubmitting()) {
+          {{ 'auth.signUp.submitting' | translate }}
+        } @else {
+          {{ 'auth.signUp.submit' | translate }}
+        }
+      </button>
+    </form>
+
+    <p class="switch-link">
+      {{ 'auth.signUp.switchText' | translate }}
+      <a routerLink="/sign-in">{{ 'auth.signUp.switchAction' | translate }}</a>
+    </p>
+  </section>
+</main>

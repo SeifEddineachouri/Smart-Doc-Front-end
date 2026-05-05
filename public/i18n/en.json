@@ -1,0 +1,123 @@
+{
+  "common": {
+    "brand": "SmartDoc",
+    "language": "Language",
+    "langEnglish": "Switch language to English",
+    "langFrench": "Switch language to French"
+  },
+  "auth": {
+    "signOut": "Sign out",
+    "signOutSubmitting": "Signing out...",
+    "common": {
+      "emailPlaceholder": "you@company.com",
+      "passwordPlaceholder": "At least 8 characters",
+      "passwordError": "Password must be at least 8 characters."
+    },
+    "signIn": {
+      "languageAria": "Language selector",
+      "title": "Welcome back",
+      "lead": "Sign in to continue creating legal and business drafts from your source documents.",
+      "emailLabel": "Email",
+      "emailError": "Enter a valid email address.",
+      "passwordLabel": "Password",
+      "rememberMe": "Keep me signed in",
+      "submitting": "Signing in...",
+      "submit": "Sign in",
+      "switchText": "New to SmartDoc?",
+      "switchAction": "Create an account"
+    },
+    "signUp": {
+      "languageAria": "Language selector",
+      "title": "Create your workspace",
+      "lead": "Set up your account to upload source documents and generate polished drafts in minutes.",
+      "fullNameLabel": "Full name",
+      "fullNamePlaceholder": "Alyah Morgan",
+      "fullNameError": "Please enter your name.",
+      "workEmailLabel": "Work email",
+      "workEmailError": "A valid email is required.",
+      "passwordLabel": "Password",
+      "terms": "I agree to the Terms and Privacy Policy.",
+      "termsError": "You must accept terms to continue.",
+      "submitting": "Creating account...",
+      "submit": "Create account",
+      "switchText": "Already have an account?",
+      "switchAction": "Sign in",
+      "passwordStrength": {
+        "label": "Password strength",
+        "weak": "Weak",
+        "moderate": "Moderate",
+        "strong": "Strong"
+      }
+    }
+  },
+  "chat": {
+    "brand": "SmartDoc Assistant",
+    "title": "Ask AI About Your Documents",
+    "subtitle": "Upload your files and ask questions to get instant, document-grounded answers.",
+    "authLinksAria": "Authentication links",
+    "dashboardAria": "Document Q&A dashboard",
+    "steps": {
+      "upload": "1. Upload source documents",
+      "ask": "2. Ask your question",
+      "answers": "3. AI answers"
+    },
+    "upload": {
+      "dragTitle": "Drag and drop files here",
+      "dragHint": "or click to browse PDFs, Word docs, or text files",
+      "uploading": "Upload in progress. Please wait before asking your question.",
+      "uploadedAria": "Uploaded documents",
+      "remove": "Remove",
+      "unknownType": "Unknown type",
+      "none": "No files added yet."
+    },
+    "form": {
+      "questionLabel": "What do you want to ask?",
+      "questionPlaceholder": "Example: What obligations are missing from this contract draft and what should be clarified with the client?",
+      "questionError": "Question should be at least 8 characters.",
+      "userIdMissing": "Your session is incomplete. Please sign in again.",
+      "waitUpload": "Please wait until file upload is complete before asking.",
+      "askError": "Unable to get AI answer right now. Please try again.",
+      "asking": "Analyzing your documents...",
+      "submit": "Ask AI"
+    },
+    "output": {
+      "answersAria": "AI answer cards",
+      "empty": "AI answers will appear here after you ask a question."
+    },
+    "history": {
+      "title": "Recent history",
+      "aria": "Chat history",
+      "loading": "Loading history...",
+      "loadingMore": "Loading more...",
+      "loadMore": "Load more",
+      "empty": "No chat history yet.",
+      "loadError": "Could not load chat history. Please retry."
+    },
+    "sidebar": {
+      "aria": "Chat menu",
+      "newChat": "New chat",
+      "searchPlaceholder": "Search chats"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "aria": "Chat sessions",
+      "loading": "Loading sessions...",
+      "empty": "No sessions yet.",
+      "untitled": "Untitled session",
+      "noQuestions": "No questions yet",
+      "archive": "Archive",
+      "noActive": "Start a new chat to upload documents."
+    },
+    "generated": {
+      "directTitle": "Direct Answer",
+      "directType": "Answer",
+      "directBody": "Based on {{count}} uploaded file(s), here is a concise answer to your question: \"{{question}}\".",
+      "keyPointsTitle": "Supporting Evidence",
+      "keyPointsType": "Key points",
+      "keyPointsBody": "The AI highlights references and clauses found across your uploaded documents.",
+      "followTitle": "Suggested Follow-up",
+      "followType": "Next question",
+      "followBody": "Ask for risk summary, missing information, or a clause-by-clause explanation for deeper analysis."
+    }
+  }
+}

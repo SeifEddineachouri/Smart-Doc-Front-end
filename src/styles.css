@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+:root {
+	--title-font: 'Space Grotesk', 'Segoe UI', sans-serif;
+	--body-font: 'Manrope', 'Segoe UI', sans-serif;
+
+	--bg: #d9ecf2;
+	--surface: rgb(255 255 255 / 86%);
+	--surface-border: #b2cfd8;
+	--input-bg: #f3fbfd;
+	--text-main: #0e2f3f;
+	--text-soft: #476673;
+	--accent-700: #0f6a89;
+	--focus-ring: #ffb067;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: var(--body-font);
+	color: var(--text-main);
+	background:
+		radial-gradient(circle at 15% 15%, #ffe9cc 0 20%, transparent 50%),
+		radial-gradient(circle at 85% 10%, #cde9f6 0 24%, transparent 52%),
+		linear-gradient(155deg, #edf8ff, var(--bg));
+}
