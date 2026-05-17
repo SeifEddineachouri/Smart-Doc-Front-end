@@ -1,3 +1,5 @@
+import { LanguageCode } from './language.model';
+
 export interface SignInRequest {
   email: string;
   password: string;
@@ -15,7 +17,7 @@ export interface AuthUserProfile {
   id: string;
   fullName: string;
   email: string;
-  language: 'en' | 'fr';
+  language: LanguageCode;
 }
 
 export interface AuthResponse {

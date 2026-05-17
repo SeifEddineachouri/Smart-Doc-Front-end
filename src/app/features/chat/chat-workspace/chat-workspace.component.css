@@ -137,6 +137,7 @@ h1 {
 .topbar-nav {
   display: flex;
   gap: 0.65rem;
+  align-items: center;
 }
 
 .topbar-nav a {
@@ -164,6 +165,29 @@ h1 {
 .topbar-action:disabled {
   cursor: progress;
   opacity: 0.7;
+}
+
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgb(15 106 137 / 26%);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  background: rgb(15 106 137 / 8%);
+  color: var(--accent-700);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.payment-badge-label {
+  white-space: nowrap;
+}
+
+.payment-badge-plan {
+  color: var(--text-main);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .grid-layout {

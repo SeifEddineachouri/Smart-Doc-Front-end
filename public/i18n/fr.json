@@ -3,7 +3,8 @@
     "brand": "SmartDoc",
     "language": "Langue",
     "langEnglish": "Passer la langue en anglais",
-    "langFrench": "Passer la langue en francais"
+    "langFrench": "Passer la langue en francais",
+    "langArabic": "Passer la langue en arabe"
   },
   "auth": {
     "signOut": "Deconnecter",
@@ -48,6 +49,75 @@
         "moderate": "Moyen",
         "strong": "Fort"
       }
+    }
+  },
+  "billing": {
+    "title": "Facturation",
+    "paywallHeroTitle": "Debloquez votre espace",
+    "paywallLead": "Choisissez une formule et finalisez le paiement pour activer l'acces via le service de paiement.",
+    "activeHeroTitle": "Facturation et acces",
+    "activeLead": "Votre droit d'acces est actif. Vous pouvez rouvrir le paiement pour changer de formule ou actualiser l'etat.",
+    "planKicker": "Choix de la formule",
+    "planTitle": "Choisissez une formule",
+    "planPanelPaywallNote": "Selectionnez une formule pour ouvrir le paiement heberge et debloquer l'espace.",
+    "planPanelActiveNote": "Votre abonnement est actif. Rouvrez le paiement si vous souhaitez gerer ou changer de formule.",
+    "summaryKicker": "Paiement",
+    "summaryTitle": "Verifier le paiement",
+    "summaryCopy": "La formule selectionnee est envoyee au service de paiement, qui renvoie une URL de paiement heberge.",
+    "currentAccessTitle": "Abonnement actuel",
+    "currentAccessCopy": "Cet espace est deja debloque. Actualisez le droit d'acces ou rouvrez le paiement pour gerer la facturation.",
+    "statusLabel": "Etat",
+    "selectedPlanLabel": "Formule selectionnee",
+    "currentPlanLabel": "Formule actuelle",
+    "summaryCycle": "Prix mensuel",
+    "perMonth": "/ mois",
+    "recommended": "Recommande",
+    "startCheckout": "Demarrer le paiement",
+    "checkoutAgain": "Rouvrir le paiement",
+    "openWorkspace": "Ouvrir l'espace",
+    "refreshStatus": "Actualiser l'etat",
+    "refreshing": "Actualisation...",
+    "activating": "Ouverture du paiement...",
+    "checkoutError": "Impossible de demarrer le paiement maintenant. Veuillez reessayer.",
+    "status": {
+      "checking": "Verification du droit d'acces...",
+      "active": "Actif",
+      "trial": "Essai",
+      "inactive": "Inactif",
+      "pastDue": "En retard",
+      "canceled": "Annule",
+      "refund": "Rembourse"
+    },
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Ideale pour les utilisateurs seuls et les petites revues.",
+        "features": {
+          "0": "Poser des questions sur les documents televerses",
+          "1": "Garder les sessions et l'historique organises",
+          "2": "Support de l'anglais, du francais et de l'arabe"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Plus de capacite pour les equipes en croissance et les volumes plus importants.",
+        "features": {
+          "0": "Tout ce qui est inclus dans Starter",
+          "1": "Plus de debit documentaire pour les equipes actives",
+          "2": "Acces prioritaire aux futures mises a niveau de facturation"
+        }
+      }
+    },
+    "return": {
+      "successTitle": "Paiement termine",
+      "successLead": "Nous verifions le droit d'acces avant d'ouvrir l'espace.",
+      "checking": "Verification du statut du paiement...",
+      "pending": "Le paiement n'est pas encore actif. Si le paiement vient de se terminer, attendez un instant puis actualisez.",
+      "openWorkspace": "Ouvrir l'espace",
+      "openBilling": "Retour a la facturation",
+      "cancelTitle": "Paiement annule",
+      "cancelLead": "Aucun debit n'a ete effectue. Vous pouvez reessayer ou revenir a l'espace.",
+      "tryAgain": "Reessayer"
     }
   },
   "chat": {

@@ -1,0 +1,37 @@
+<main class="return-page">
+	<section class="return-card" aria-labelledby="return-title">
+		<p class="eyebrow">{{ 'common.brand' | translate }}</p>
+
+		@if (mode === 'success') {
+			<h1 id="return-title">{{ 'billing.return.successTitle' | translate }}</h1>
+			<p class="return-copy">{{ 'billing.return.successLead' | translate }}</p>
+
+			@if (isChecking()) {
+				<p class="return-status">{{ 'billing.return.checking' | translate }}</p>
+			} @else if (isEntitled()) {
+				<p class="return-status success">{{ statusKey() | translate }}</p>
+			} @else {
+				<p class="return-status">{{ 'billing.return.pending' | translate }}</p>
+			}
+
+			<div class="return-actions">
+				<button type="button" class="primary-action" [disabled]="isChecking()" (click)="goToWorkspace()">
+					{{ 'billing.return.openWorkspace' | translate }}
+				</button>
+				<button type="button" class="secondary-action" [disabled]="isChecking()" (click)="goToBilling()">
+					{{ 'billing.return.openBilling' | translate }}
+				</button>
+			</div>
+		} @else {
+			<h1 id="return-title">{{ 'billing.return.cancelTitle' | translate }}</h1>
+			<p class="return-copy">{{ 'billing.return.cancelLead' | translate }}</p>
+
+			<div class="return-actions">
+				<button type="button" class="primary-action" (click)="retryCheckout()">
+					{{ 'billing.return.tryAgain' | translate }}
+				</button>
+				<a class="secondary-action" routerLink="/workspace">{{ 'billing.return.openWorkspace' | translate }}</a>
+			</div>
+		}
+	</section>
+</main>

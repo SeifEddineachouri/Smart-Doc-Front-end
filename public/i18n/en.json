@@ -3,7 +3,8 @@
     "brand": "SmartDoc",
     "language": "Language",
     "langEnglish": "Switch language to English",
-    "langFrench": "Switch language to French"
+    "langFrench": "Switch language to French",
+    "langArabic": "Switch language to Arabic"
   },
   "auth": {
     "signOut": "Sign out",
@@ -48,6 +49,75 @@
         "moderate": "Moderate",
         "strong": "Strong"
       }
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "paywallHeroTitle": "Unlock your workspace",
+    "paywallLead": "Choose a plan and complete checkout to activate access through the payment service.",
+    "activeHeroTitle": "Billing and access",
+    "activeLead": "Your entitlement is active. You can reopen checkout to switch plans or refresh the current status.",
+    "planKicker": "Plan selection",
+    "planTitle": "Choose a plan",
+    "planPanelPaywallNote": "Pick a plan to open hosted checkout and unlock the workspace.",
+    "planPanelActiveNote": "Your subscription is active. Reopen checkout if you want to manage or switch plans.",
+    "summaryKicker": "Checkout",
+    "summaryTitle": "Review your checkout",
+    "summaryCopy": "The selected plan is sent to the payment service, which returns a hosted checkout URL.",
+    "currentAccessTitle": "Current subscription",
+    "currentAccessCopy": "This workspace is already unlocked. Refresh entitlement or reopen checkout to manage billing.",
+    "statusLabel": "Status",
+    "selectedPlanLabel": "Selected plan",
+    "currentPlanLabel": "Current plan",
+    "summaryCycle": "Monthly price",
+    "perMonth": "/ month",
+    "recommended": "Recommended",
+    "startCheckout": "Start checkout",
+    "checkoutAgain": "Open checkout again",
+    "openWorkspace": "Open workspace",
+    "refreshStatus": "Refresh status",
+    "refreshing": "Refreshing...",
+    "activating": "Opening checkout...",
+    "checkoutError": "We could not start checkout right now. Please try again.",
+    "status": {
+      "checking": "Checking entitlement...",
+      "active": "Active",
+      "trial": "Trial",
+      "inactive": "Inactive",
+      "pastDue": "Past due",
+      "canceled": "Canceled",
+      "refund": "Refunded"
+    },
+    "plans": {
+      "starter": {
+        "name": "Starter",
+        "description": "Best for solo operators and small review cycles.",
+        "features": {
+          "0": "Ask questions against uploaded documents",
+          "1": "Keep sessions and history organized",
+          "2": "Support English, French, and Arabic"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "More capacity for growing teams and heavier document volume.",
+        "features": {
+          "0": "Everything in Starter",
+          "1": "Higher document throughput for active teams",
+          "2": "Priority access to future billing upgrades"
+        }
+      }
+    },
+    "return": {
+      "successTitle": "Checkout complete",
+      "successLead": "We are verifying entitlement before opening the workspace.",
+      "checking": "Checking payment status...",
+      "pending": "Payment is not active yet. If it just completed, wait a moment and refresh.",
+      "openWorkspace": "Open workspace",
+      "openBilling": "Back to billing",
+      "cancelTitle": "Checkout canceled",
+      "cancelLead": "No charge was completed. You can try again or return to the workspace.",
+      "tryAgain": "Try again"
     }
   },
   "chat": {

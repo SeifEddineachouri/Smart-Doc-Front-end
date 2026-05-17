@@ -21,6 +21,16 @@
         <span aria-hidden="true" class="flag-icon fi-fr"></span>
         <span>FR</span>
       </button>
+      <button
+        type="button"
+        class="flag-btn"
+        [class.active]="currentLang() === 'ar'"
+        (click)="selectLanguage('ar')"
+        [attr.aria-label]="'common.langArabic' | translate"
+      >
+        <span aria-hidden="true" class="flag-icon fi-sa"></span>
+        <span>AR</span>
+      </button>
     </fieldset>
 
     <p class="eyebrow">{{ 'common.brand' | translate }}</p>
@@ -29,7 +39,15 @@
 
     <form class="auth-form" [formGroup]="signUpForm" (ngSubmit)="submit()" novalidate>
       <label class="field">
-        <span>{{ 'auth.signUp.fullNameLabel' | translate }}</span>
+        <span class="field-label">
+          <span aria-hidden="true" class="field-icon">
+            <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
+              <circle cx="12" cy="8" r="3.5" />
+              <path d="M5 19a7 7 0 0 1 14 0" />
+            </svg>
+          </span>
+          <span>{{ 'auth.signUp.fullNameLabel' | translate }}</span>
+        </span>
         <input type="text" formControlName="fullName" autocomplete="name" [placeholder]="'auth.signUp.fullNamePlaceholder' | translate" />
       </label>
       @if (signUpForm.controls.fullName.invalid && signUpForm.controls.fullName.touched) {
@@ -37,7 +55,15 @@
       }
 
       <label class="field">
-        <span>{{ 'auth.signUp.workEmailLabel' | translate }}</span>
+        <span class="field-label">
+          <span aria-hidden="true" class="field-icon">
+            <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
+              <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
+              <path d="m3.5 7.5 8.5 5.75 8.5-5.75" />
+            </svg>
+          </span>
+          <span>{{ 'auth.signUp.workEmailLabel' | translate }}</span>
+        </span>
         <input type="email" formControlName="workEmail" autocomplete="email" [placeholder]="'auth.common.emailPlaceholder' | translate" />
       </label>
       @if (signUpForm.controls.workEmail.invalid && signUpForm.controls.workEmail.touched) {
@@ -45,7 +71,15 @@
       }
 
       <label class="field">
-        <span>{{ 'auth.signUp.passwordLabel' | translate }}</span>
+        <span class="field-label">
+          <span aria-hidden="true" class="field-icon">
+            <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8">
+              <rect x="4.5" y="10.5" width="15" height="9" rx="2" ry="2" />
+              <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
+            </svg>
+          </span>
+          <span>{{ 'auth.signUp.passwordLabel' | translate }}</span>
+        </span>
         <input type="password" formControlName="password" autocomplete="new-password" [placeholder]="'auth.common.passwordPlaceholder' | translate" />
       </label>
       <p class="strength">{{ 'auth.signUp.passwordStrength.label' | translate }}: <strong>{{ passwordStrength() | translate }}</strong></p>

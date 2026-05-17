@@ -57,13 +57,14 @@
           <h1>{{ 'chat.title' | translate }}</h1>
           <p class="subtitle">{{ 'chat.subtitle' | translate }}</p>
         </div>
-        @if (!isAuthenticated()) {
-          <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
-            <a routerLink="/sign-in">{{ 'auth.signIn.submit' | translate }}</a>
-            <a routerLink="/sign-up">{{ 'auth.signUp.submit' | translate }}</a>
-          </nav>
-        } @else {
-          <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
+        <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
+          @if (isAuthenticated()) {
+            <a class="payment-badge" routerLink="/billing">
+              <span class="payment-badge-label">{{ paymentStatusKey() | translate }}</span>
+              @if (paymentPlanName()) {
+                <span class="payment-badge-plan">{{ paymentPlanName() }}</span>
+              }
+            </a>
             <button type="button" class="topbar-action" [disabled]="isSigningOut()" (click)="signOut()">
               @if (isSigningOut()) {
                 {{ 'auth.signOutSubmitting' | translate }}
@@ -71,8 +72,11 @@
                 {{ 'auth.signOut' | translate }}
               }
             </button>
-          </nav>
-        }
+          } @else {
+            <a routerLink="/sign-in">{{ 'auth.signIn.submit' | translate }}</a>
+            <a routerLink="/sign-up">{{ 'auth.signUp.submit' | translate }}</a>
+          }
+        </nav>
       </header>
 
       <section class="grid-layout" [attr.aria-label]="'chat.dashboardAria' | translate">

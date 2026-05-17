@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { LanguageCode, SignUpRequest } from '../../../core/models';
+import { LanguageCode, normalizeLanguageCode, SignUpRequest } from '../../../core/models';
 import { AuthService } from '../../../core/api/auth.service';
 import { finalize } from 'rxjs/operators';
 
@@ -43,7 +43,7 @@ export class SignUpComponent {
   });
 
   public constructor() {
-    this.currentLang.set(this.translate.getCurrentLang() === 'fr' ? 'fr' : 'en');
+    this.currentLang.set(normalizeLanguageCode(this.translate.getCurrentLang() ?? this.translate.getBrowserLang()));
   }
 
   protected selectLanguage(lang: LanguageCode): void {
@@ -71,7 +71,7 @@ export class SignUpComponent {
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {
-          this.router.navigate(['/workspace']);
+          this.router.navigate(['/paywall']);
         }
       });
   }

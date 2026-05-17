@@ -1,4 +1,4 @@
-# SmartDoc
+﻿# SmartDoc
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
 
@@ -57,3 +57,20 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Docker image
+A production Docker image is available for the Angular frontend.
+It builds the app with Node and serves it with Nginx.
+### Build
+```powershell
+cd C:\Users\seifa\Desktop\SmartDoc
+docker build -t smartdoc-frontend:local .
+```
+### Run
+The container expects the SmartDoc backend to be reachable as `smartdoc:8087` on the same Docker network.
+If you want to run it with the backend stack, attach it to the same network as your backend compose project.
+```powershell
+docker run --rm -p 8080:80 --name smartdoc-frontend --network smartdoc_default smartdoc-frontend:local
+```
+### Check
+- Frontend: `http://localhost:8080`
+- API proxy: `http://localhost:8080/api/v1/...`

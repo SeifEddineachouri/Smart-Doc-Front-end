@@ -1,0 +1,145 @@
+<main class="billing-page">
+	<section class="billing-shell" aria-labelledby="billing-title">
+		<header class="billing-hero">
+			<p class="eyebrow">{{ 'common.brand' | translate }}</p>
+			<h1 id="billing-title">
+				@if (hasAccess()) {
+					{{ 'billing.activeHeroTitle' | translate }}
+				} @else {
+					{{ 'billing.paywallHeroTitle' | translate }}
+				}
+			</h1>
+			<p class="lead">
+				@if (hasAccess()) {
+					{{ 'billing.activeLead' | translate }}
+				} @else {
+					{{ 'billing.paywallLead' | translate }}
+				}
+			</p>
+		</header>
+
+		<div class="billing-grid">
+			<section class="panel plan-panel" aria-labelledby="plan-panel-title">
+				<div class="panel-header">
+					<p class="panel-kicker">{{ 'billing.planKicker' | translate }}</p>
+					<h2 id="plan-panel-title">{{ 'billing.planTitle' | translate }}</h2>
+					<p class="panel-note">
+						@if (hasAccess()) {
+							{{ 'billing.planPanelActiveNote' | translate }}
+						} @else {
+							{{ 'billing.planPanelPaywallNote' | translate }}
+						}
+					</p>
+				</div>
+
+				<div class="plan-list">
+					@for (plan of plans; track plan.id) {
+						<button
+							type="button"
+							class="plan-card"
+							[class.active]="selectedPlan().id === plan.id"
+							[attr.aria-pressed]="selectedPlan().id === plan.id"
+							(click)="selectPlan(plan.id)"
+						>
+							<div class="plan-card-head">
+								<div>
+									<p class="plan-name">{{ plan.nameKey | translate }}</p>
+									<p class="plan-description">{{ plan.descriptionKey | translate }}</p>
+								</div>
+								@if (plan.recommended) {
+									<span class="badge">{{ 'billing.recommended' | translate }}</span>
+								}
+							</div>
+
+							<div class="plan-price">
+								<strong>{{ plan.price }}</strong>
+								<span>{{ 'billing.perMonth' | translate }}</span>
+							</div>
+
+							<ul class="feature-list">
+								@for (featureKey of plan.featureKeys; track featureKey) {
+									<li>{{ featureKey | translate }}</li>
+								}
+							</ul>
+						</button>
+					}
+				</div>
+			</section>
+
+			<section class="panel checkout-panel" aria-labelledby="checkout-panel-title">
+				<div class="summary-card">
+					<p class="panel-kicker">{{ 'billing.summaryKicker' | translate }}</p>
+					<h2 id="checkout-panel-title">
+						@if (hasAccess()) {
+							{{ 'billing.currentAccessTitle' | translate }}
+						} @else {
+							{{ 'billing.summaryTitle' | translate }}
+						}
+					</h2>
+					<p class="summary-copy">
+						@if (hasAccess()) {
+							{{ 'billing.currentAccessCopy' | translate }}
+						} @else {
+							{{ 'billing.summaryCopy' | translate }}
+						}
+					</p>
+
+					<div class="summary-row">
+						<span>{{ 'billing.statusLabel' | translate }}</span>
+						<strong>{{ statusKey() | translate }}</strong>
+					</div>
+
+					@if (hasAccess()) {
+						<div class="summary-row">
+							<span>{{ 'billing.currentPlanLabel' | translate }}</span>
+							<strong>{{ activePlanName() ?? (selectedPlan().nameKey | translate) }}</strong>
+						</div>
+					} @else {
+						<div class="summary-row">
+							<span>{{ 'billing.selectedPlanLabel' | translate }}</span>
+							<strong>{{ selectedPlan().nameKey | translate }}</strong>
+						</div>
+
+						<div class="summary-row">
+							<span>{{ 'billing.summaryCycle' | translate }}</span>
+							<strong>{{ selectedPlan().price }} {{ 'billing.perMonth' | translate }}</strong>
+						</div>
+					}
+
+					@if (checkoutError()) {
+						<p class="checkout-error">{{ checkoutError() }}</p>
+					}
+				</div>
+
+				<div class="billing-actions">
+					@if (hasAccess()) {
+						<button type="button" class="primary-action" [disabled]="isCheckoutLoading()" (click)="startCheckout()">
+							@if (isCheckoutLoading()) {
+								{{ 'billing.activating' | translate }}
+							} @else {
+								{{ 'billing.checkoutAgain' | translate }}
+							}
+						</button>
+						<a class="secondary-action" routerLink="/workspace">{{ 'billing.openWorkspace' | translate }}</a>
+					} @else {
+						<button type="button" class="primary-action" [disabled]="isCheckoutLoading()" (click)="startCheckout()">
+							@if (isCheckoutLoading()) {
+								{{ 'billing.activating' | translate }}
+							} @else {
+								{{ 'billing.startCheckout' | translate }}
+							}
+						</button>
+					}
+
+					<button type="button" class="secondary-action" [disabled]="isRefreshingEntitlement()" (click)="refreshEntitlement()">
+						@if (isRefreshingEntitlement()) {
+							{{ 'billing.refreshing' | translate }}
+						} @else {
+							{{ 'billing.refreshStatus' | translate }}
+						}
+					</button>
+				</div>
+			</section>
+		</div>
+	</section>
+</main>

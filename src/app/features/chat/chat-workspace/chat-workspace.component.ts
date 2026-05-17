@@ -10,6 +10,7 @@ import { AuthService } from '../../../core/api/auth.service';
 import { DocumentService } from '../../../core/api/document.service';
 import { SessionService } from '../../../core/api/session.service';
 import { AuthStore } from '../../../core/state/auth.store';
+import { BillingStore } from '../../../core/state/billing.store';
 
 @Component({
   selector: 'app-chat-workspace',
@@ -26,6 +27,7 @@ export class ChatWorkspaceComponent implements OnInit {
   private readonly documentService = inject(DocumentService);
   private readonly sessionService = inject(SessionService);
   private readonly authStore = inject(AuthStore);
+  private readonly billingStore = inject(BillingStore);
   private readonly router = inject(Router);
   private readonly fb = new FormBuilder();
   private readonly historySize = 20;
@@ -33,6 +35,8 @@ export class ChatWorkspaceComponent implements OnInit {
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
   protected readonly isSigningOut = signal(false);
+  protected readonly paymentStatusKey = this.billingStore.statusKey;
+  protected readonly paymentPlanName = this.billingStore.activePlanName;
   protected readonly isDragOver = signal(false);
   protected readonly isAsking = signal(false);
   protected readonly pendingUploadsCount = signal(0);
@@ -61,6 +65,7 @@ export class ChatWorkspaceComponent implements OnInit {
   });
 
   public ngOnInit(): void {
+    this.refreshPaymentStatus();
     this.loadSessions();
   }
 
@@ -440,7 +445,23 @@ export class ChatWorkspaceComponent implements OnInit {
 
   private finalizeSignOut(): void {
     this.authStore.clearSession();
+    this.billingStore.clear();
     this.isSigningOut.set(false);
     this.router.navigate(['/sign-in']);
+  }
+
+  private refreshPaymentStatus(): void {
+    const user = this.authStore.currentUser();
+
+    if (!user?.id) {
+      return;
+    }
+
+    this.billingStore.refreshEntitlement(user.id).subscribe({
+      error: () => {
+        // The workspace guard already enforced access. Keep the UI usable if
+        // the entitlement refresh fails after navigation.
+      }
+    });
   }
 }

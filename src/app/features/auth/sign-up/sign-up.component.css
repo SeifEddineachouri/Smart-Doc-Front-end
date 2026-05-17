@@ -27,6 +27,10 @@
   gap: 0.35rem;
 }
 
+[dir='rtl'] .lang-picker {
+  justify-content: flex-start;
+}
+
 .flag-btn {
   border: 1px solid var(--surface-border);
   border-radius: 999px;
@@ -57,6 +61,10 @@
 
 .flag-btn .flag-icon.fi-fr {
   background-image: url('/flags/4x3/fr.svg');
+}
+
+.flag-btn .flag-icon.fi-sa {
+  background-image: url('/flags/4x3/sa.svg');
 }
 
 .flag-btn.active {
@@ -94,8 +102,29 @@ h1 {
   gap: 0.35rem;
 }
 
-.field span {
+.field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-weight: 600;
+  color: var(--text-main);
+}
+
+.field-icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  color: var(--accent-700);
+  line-height: 0;
+}
+
+.field-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 input[type='text'],
