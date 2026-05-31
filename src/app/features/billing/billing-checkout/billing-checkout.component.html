@@ -1,5 +1,17 @@
 <main class="billing-page">
 	<section class="billing-shell" aria-labelledby="billing-title">
+		<div class="billing-topbar">
+			<nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
+				<button type="button" class="topbar-action" [disabled]="isSigningOut()" (click)="signOut()">
+					@if (isSigningOut()) {
+						{{ 'auth.signOutSubmitting' | translate }}
+					} @else {
+						{{ 'auth.signOut' | translate }}
+					}
+				</button>
+			</nav>
+		</div>
+
 		<header class="billing-hero">
 			<p class="eyebrow">{{ 'common.brand' | translate }}</p>
 			<h1 id="billing-title">

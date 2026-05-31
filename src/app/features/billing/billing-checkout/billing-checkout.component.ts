@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { PaymentCheckoutSessionRequest } from '../../../core/models';
+import { AuthService } from '../../../core/api/auth.service';
 import { AuthStore } from '../../../core/state/auth.store';
 import { BillingStore } from '../../../core/state/billing.store';
 import { PaymentService } from '../../../core/api/payment.service';
@@ -27,12 +28,14 @@ interface BillingPlanOption {
 })
 	export class BillingCheckoutComponent implements OnInit {
 	private readonly translate = inject(TranslateService);
+		private readonly authService = inject(AuthService);
 	private readonly authStore = inject(AuthStore);
 	private readonly billingStore = inject(BillingStore);
 	private readonly paymentService = inject(PaymentService);
 	private readonly router = inject(Router);
 
 	protected readonly isCheckoutLoading = signal(false);
+		protected readonly isSigningOut = signal(false);
 	protected readonly checkoutError = signal<string | null>(null);
 	protected readonly selectedPlanId = signal<BillingPlanId>('starter');
 	protected readonly plans: BillingPlanOption[] = [
@@ -40,7 +43,7 @@ interface BillingPlanOption {
 			id: 'starter',
 			nameKey: 'billing.plans.starter.name',
 			descriptionKey: 'billing.plans.starter.description',
-			price: '$29',
+			price: '€29',
 			featureKeys: [
 				'billing.plans.starter.features.0',
 				'billing.plans.starter.features.1',
@@ -51,7 +54,7 @@ interface BillingPlanOption {
 			id: 'pro',
 			nameKey: 'billing.plans.pro.name',
 			descriptionKey: 'billing.plans.pro.description',
-			price: '$79',
+			price: '€79',
 			recommended: true,
 			featureKeys: [
 				'billing.plans.pro.features.0',
@@ -64,11 +67,17 @@ interface BillingPlanOption {
 	protected readonly selectedPlan = computed(() => this.plans.find((plan) => plan.id === this.selectedPlanId()) ?? this.plans[0]);
 	protected readonly entitlement = this.billingStore.entitlement;
 	protected readonly hasAccess = this.billingStore.hasAccess;
+	protected readonly isAdmin = this.billingStore.isAdmin;
 	protected readonly statusKey = this.billingStore.statusKey;
 	protected readonly activePlanName = this.billingStore.activePlanName;
 	protected readonly isRefreshingEntitlement = this.billingStore.isLoading;
 
 	public ngOnInit(): void {
+		if (this.isAdmin()) {
+			this.goToWorkspace();
+			return;
+		}
+
 		this.refreshEntitlement();
 	}
 
@@ -78,6 +87,11 @@ interface BillingPlanOption {
 
 	protected startCheckout(): void {
 		this.checkoutError.set(null);
+
+		if (this.isAdmin()) {
+			this.goToWorkspace();
+			return;
+		}
 
 		const user = this.requireCurrentUser();
 		if (!user) {
@@ -114,6 +128,11 @@ interface BillingPlanOption {
 	}
 
 	protected refreshEntitlement(): void {
+		if (this.isAdmin()) {
+			this.goToWorkspace();
+			return;
+		}
+
 		const user = this.requireCurrentUser();
 		if (!user) {
 			return;
@@ -137,6 +156,19 @@ interface BillingPlanOption {
 
 	protected goToBilling(): void {
 		this.router.navigate(['/billing']);
+	}
+
+	protected signOut(): void {
+		if (this.isSigningOut()) {
+			return;
+		}
+
+		this.isSigningOut.set(true);
+
+		this.authService.signout().subscribe({
+			next: () => this.finalizeSignOut(),
+			error: () => this.finalizeSignOut()
+		});
 	}
 
 	private requireCurrentUser() {
@@ -169,6 +201,13 @@ interface BillingPlanOption {
 		}
 
 		this.router.navigate(['/billing']);
+	}
+
+	private finalizeSignOut(): void {
+		this.authStore.clearSession();
+		this.billingStore.clear();
+		this.isSigningOut.set(false);
+		this.router.navigate(['/sign-in']);
 	}
 
 	private extractApiErrorMessage(error: unknown): string {

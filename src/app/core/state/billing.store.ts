@@ -1,7 +1,9 @@
-import { Injectable, computed, signal } from '@angular/core';
-import { finalize, tap } from 'rxjs';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, finalize, of, tap } from 'rxjs';
 import { PaymentEntitlementResponse } from '../models';
 import { PaymentService } from '../api/payment.service';
+import { AuthStore } from './auth.store';
+import { isAdminUser } from '../security/billing-access';
 
 const ALLOW_TRIAL_ACCESS = false;
 
@@ -9,16 +11,26 @@ const ALLOW_TRIAL_ACCESS = false;
 export class BillingStore {
 	private readonly entitlementSignal = signal<PaymentEntitlementResponse | null>(null);
 	private readonly loadingSignal = signal(false);
+	private readonly authStore = inject(AuthStore);
 
 	readonly entitlement = computed(() => this.entitlementSignal());
 	readonly isLoading = computed(() => this.loadingSignal());
-	readonly hasAccess = computed(() => this.isEntitled(this.entitlementSignal()));
-	readonly statusKey = computed(() => this.resolveStatusKey(this.entitlementSignal()?.status ?? null, this.isLoading()));
+	readonly isAdmin = computed(() => isAdminUser(this.authStore.currentUser()));
+	readonly hasAccess = computed(() => this.isAdmin() || this.isEntitled(this.entitlementSignal()));
+	readonly statusKey = computed(() =>
+		this.resolveStatusKey(this.entitlementSignal()?.status ?? null, this.isLoading(), this.isAdmin())
+	);
 	readonly activePlanName = computed(() => this.entitlementSignal()?.planName ?? null);
 
 	public constructor(private readonly paymentService: PaymentService) {}
 
-	refreshEntitlement(userId: string) {
+	refreshEntitlement(userId: string): Observable<PaymentEntitlementResponse> {
+		if (this.isAdmin()) {
+			const entitlement = this.buildAdminEntitlement();
+			this.entitlementSignal.set(entitlement);
+			return of(entitlement);
+		}
+
 		this.loadingSignal.set(true);
 
 		return this.paymentService.getEntitlement(userId).pipe(
@@ -27,7 +39,13 @@ export class BillingStore {
 		);
 	}
 
-	refreshStatus(userId: string) {
+	refreshStatus(userId: string): Observable<PaymentEntitlementResponse> {
+		if (this.isAdmin()) {
+			const entitlement = this.buildAdminEntitlement();
+			this.entitlementSignal.set(entitlement);
+			return of(entitlement);
+		}
+
 		this.loadingSignal.set(true);
 
 		return this.paymentService.getStatus(userId).pipe(
@@ -64,9 +82,13 @@ export class BillingStore {
 		return ALLOW_TRIAL_ACCESS && entitlement.status === 'trial';
 	}
 
-	private resolveStatusKey(status: PaymentEntitlementResponse['status'] | null, loading: boolean): string {
+	private resolveStatusKey(status: PaymentEntitlementResponse['status'] | null, loading: boolean, isAdmin: boolean): string {
 		if (loading) {
 			return 'billing.status.checking';
+		}
+
+		if (isAdmin) {
+			return 'billing.status.active';
 		}
 
 		switch (status) {
@@ -84,5 +106,18 @@ export class BillingStore {
 			default:
 				return 'billing.status.inactive';
 		}
+	}
+
+	private buildAdminEntitlement(): PaymentEntitlementResponse {
+		return {
+			active: true,
+			status: 'active',
+			planId: null,
+			planName: null,
+			amountCents: null,
+			currency: null,
+			updatedAt: null,
+			expiresAt: null
+		};
 	}
 }

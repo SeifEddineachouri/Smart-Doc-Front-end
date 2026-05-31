@@ -35,6 +35,7 @@ export class ChatWorkspaceComponent implements OnInit {
 
   protected readonly isAuthenticated = this.authStore.isAuthenticated;
   protected readonly isSigningOut = signal(false);
+  protected readonly isAdmin = this.billingStore.isAdmin;
   protected readonly paymentStatusKey = this.billingStore.statusKey;
   protected readonly paymentPlanName = this.billingStore.activePlanName;
   protected readonly isDragOver = signal(false);
@@ -454,6 +455,10 @@ export class ChatWorkspaceComponent implements OnInit {
     const user = this.authStore.currentUser();
 
     if (!user?.id) {
+      return;
+    }
+
+    if (this.isAdmin()) {
       return;
     }
 

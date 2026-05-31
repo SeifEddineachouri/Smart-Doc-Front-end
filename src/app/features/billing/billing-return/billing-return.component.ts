@@ -4,6 +4,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { AuthStore } from '../../../core/state/auth.store';
 import { BillingStore } from '../../../core/state/billing.store';
+import { isAdminUser } from '../../../core/security/billing-access';
 
 type BillingReturnMode = 'success' | 'cancel';
 
@@ -26,12 +27,22 @@ export class BillingReturnComponent implements OnInit {
 	protected readonly statusKey = this.billingStore.statusKey;
 
 	public ngOnInit(): void {
+		if (isAdminUser(this.authStore.currentUser())) {
+			this.router.navigate(['/workspace']);
+			return;
+		}
+
 		if (this.mode === 'success') {
 			this.refreshEntitlement();
 		}
 	}
 
 	protected goToBilling(): void {
+		if (isAdminUser(this.authStore.currentUser())) {
+			this.router.navigate(['/workspace']);
+			return;
+		}
+
 		this.router.navigate(['/billing']);
 	}
 
@@ -48,6 +59,11 @@ export class BillingReturnComponent implements OnInit {
 
 		if (!user?.id) {
 			this.router.navigate(['/sign-in']);
+			return;
+		}
+
+		if (isAdminUser(user)) {
+			this.router.navigate(['/workspace']);
 			return;
 		}
 

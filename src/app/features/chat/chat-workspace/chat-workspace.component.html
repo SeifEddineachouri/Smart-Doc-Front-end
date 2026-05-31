@@ -59,7 +59,7 @@
         </div>
         <nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
           @if (isAuthenticated()) {
-            <a class="payment-badge" routerLink="/billing">
+                <a class="payment-badge" [routerLink]="isAdmin() ? '/workspace' : '/billing'">
               <span class="payment-badge-label">{{ paymentStatusKey() | translate }}</span>
               @if (paymentPlanName()) {
                 <span class="payment-badge-plan">{{ paymentPlanName() }}</span>

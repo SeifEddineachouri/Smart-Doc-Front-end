@@ -111,9 +111,11 @@ Use:
 - [x] Add checkout redirect handling
 - [x] Add entitlement refresh after payment
 - [x] Add error handling for webhook delay
+- [x] Add admin billing bypass for support/testing accounts
 
 ## Current frontend implementation
 - The app calls the Spring payment service through the proxy at `/api/v1/payments`.
 - `/paywall` starts checkout for unpaid users, `/billing` shows the current billing state, and `/billing/success` and `/billing/cancel` handle checkout returns.
 - `BillingStore` refreshes entitlement state from the backend, and `/workspace` stays blocked until the entitlement is active.
+- Admin accounts are allowlisted in `src/app/core/security/billing-access.ts` and bypass both the paywall redirect and the billing checkout page.
 
