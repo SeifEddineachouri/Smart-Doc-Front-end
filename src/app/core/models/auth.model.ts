@@ -18,6 +18,8 @@ export interface AuthUserProfile {
   fullName: string;
   email: string;
   language: LanguageCode;
+  admin?: boolean;
+  isAdmin?: boolean;
 }
 
 export interface AuthResponse {

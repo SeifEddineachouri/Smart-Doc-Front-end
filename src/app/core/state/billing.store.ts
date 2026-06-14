@@ -39,6 +39,21 @@ export class BillingStore {
 		);
 	}
 
+	confirmCheckout(sessionId: string, userId: string): Observable<PaymentEntitlementResponse> {
+		if (this.isAdmin()) {
+			const entitlement = this.buildAdminEntitlement();
+			this.entitlementSignal.set(entitlement);
+			return of(entitlement);
+		}
+
+		this.loadingSignal.set(true);
+
+		return this.paymentService.confirmCheckout(sessionId, userId).pipe(
+			tap((entitlement) => this.entitlementSignal.set(entitlement)),
+			finalize(() => this.loadingSignal.set(false))
+		);
+	}
+
 	refreshStatus(userId: string): Observable<PaymentEntitlementResponse> {
 		if (this.isAdmin()) {
 			const entitlement = this.buildAdminEntitlement();

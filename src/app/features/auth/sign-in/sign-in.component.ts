@@ -55,7 +55,12 @@ export class SignInComponent {
       .signin(payload)
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
-        next: () => {
+        next: (response) => {
+          if (response.user.admin === true || response.user.isAdmin === true) {
+            this.router.navigate(['/workspace']);
+            return;
+          }
+
           this.router.navigate(['/paywall']);
         }
       });

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -23,6 +23,11 @@ export class PaymentService {
 
 	getStatus(userId: string): Observable<PaymentStatusResponse> {
 		return this.http.get<PaymentStatusResponse>(`${this.baseUrl}/status/${userId}`);
+	}
+
+	confirmCheckout(sessionId: string, userId: string): Observable<PaymentEntitlementResponse> {
+		const params = new HttpParams().set('session_id', sessionId).set('user_id', userId);
+		return this.http.post<PaymentEntitlementResponse>(`${this.baseUrl}/confirm`, null, { params });
 	}
 
 	createCheckoutSession(payload: PaymentCheckoutSessionRequest): Observable<PaymentCheckoutSessionResponse> {

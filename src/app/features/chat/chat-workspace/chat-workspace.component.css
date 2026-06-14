@@ -492,3 +492,35 @@ button[type='submit']:disabled {
     padding-top: 1rem;
   }
 }
+
+.upload-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  color: var(--accent-700);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+  border: 2px solid var(--surface-border);
+  border-top-color: var(--accent-700);
+  border-radius: 50%;
+  animation: upload-spin 0.7s linear infinite;
+}
+
+@keyframes upload-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.6s;
+  }
+}

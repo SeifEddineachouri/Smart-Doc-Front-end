@@ -108,11 +108,14 @@
                 </li>
               }
             </ul>
+          }
 
-            @if (isUploadInProgress()) {
-              <p class="hint">{{ 'chat.upload.uploading' | translate }}</p>
-            }
-          } @else {
+          @if (isUploadInProgress()) {
+            <div class="upload-progress" role="status" aria-live="polite">
+              <span class="spinner" aria-hidden="true"></span>
+              <span>{{ 'chat.upload.uploading' | translate }}</span>
+            </div>
+          } @else if (uploadedDocuments().length === 0) {
             <p class="hint">{{ 'chat.upload.none' | translate }}</p>
           }
         </article>
@@ -149,7 +152,12 @@
 
         <article class="panel output" id="answers-panel">
           <h2>{{ 'chat.steps.answers' | translate }}</h2>
-          @if (aiAnswers().length > 0) {
+          @if (isAsking()) {
+            <div class="upload-progress" role="status" aria-live="polite">
+              <span class="spinner" aria-hidden="true"></span>
+              <span>{{ 'chat.form.asking' | translate }}</span>
+            </div>
+          } @else if (aiAnswers().length > 0) {
             <ul class="draft-list" [attr.aria-label]="'chat.output.answersAria' | translate">
               @for (draft of aiAnswers(); track draft.title) {
                 <li>

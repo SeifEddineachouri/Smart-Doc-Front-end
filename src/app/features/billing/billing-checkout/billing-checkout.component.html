@@ -1,6 +1,23 @@
 <main class="billing-page">
 	<section class="billing-shell" aria-labelledby="billing-title">
-		<div class="billing-topbar">
+		<header class="billing-hero billing-header">
+			<div class="billing-hero-copy">
+				<p class="eyebrow">{{ 'common.brand' | translate }}</p>
+				<h1 id="billing-title">
+					@if (hasAccess()) {
+						{{ 'billing.activeHeroTitle' | translate }}
+					} @else {
+						{{ 'billing.paywallHeroTitle' | translate }}
+					}
+				</h1>
+				<p class="lead">
+					@if (hasAccess()) {
+						{{ 'billing.activeLead' | translate }}
+					} @else {
+						{{ 'billing.paywallLead' | translate }}
+					}
+				</p>
+			</div>
 			<nav class="topbar-nav" [attr.aria-label]="'chat.authLinksAria' | translate">
 				<button type="button" class="topbar-action" [disabled]="isSigningOut()" (click)="signOut()">
 					@if (isSigningOut()) {
@@ -10,24 +27,6 @@
 					}
 				</button>
 			</nav>
-		</div>
-
-		<header class="billing-hero">
-			<p class="eyebrow">{{ 'common.brand' | translate }}</p>
-			<h1 id="billing-title">
-				@if (hasAccess()) {
-					{{ 'billing.activeHeroTitle' | translate }}
-				} @else {
-					{{ 'billing.paywallHeroTitle' | translate }}
-				}
-			</h1>
-			<p class="lead">
-				@if (hasAccess()) {
-					{{ 'billing.activeLead' | translate }}
-				} @else {
-					{{ 'billing.paywallLead' | translate }}
-				}
-			</p>
 		</header>
 
 		<div class="billing-grid">

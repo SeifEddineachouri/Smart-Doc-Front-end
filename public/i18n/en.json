@@ -134,7 +134,7 @@
     "upload": {
       "dragTitle": "Drag and drop files here",
       "dragHint": "or click to browse PDFs, Word docs, or text files",
-      "uploading": "Upload in progress. Please wait before asking your question.",
+      "uploading": "Uploading and indexing your document for the AI. Please wait before asking your question.",
       "uploadedAria": "Uploaded documents",
       "remove": "Remove",
       "unknownType": "Unknown type",

@@ -43,7 +43,7 @@ interface BillingPlanOption {
 			id: 'starter',
 			nameKey: 'billing.plans.starter.name',
 			descriptionKey: 'billing.plans.starter.description',
-			price: '€29',
+			price: '€9.99',
 			featureKeys: [
 				'billing.plans.starter.features.0',
 				'billing.plans.starter.features.1',
@@ -54,7 +54,7 @@ interface BillingPlanOption {
 			id: 'pro',
 			nameKey: 'billing.plans.pro.name',
 			descriptionKey: 'billing.plans.pro.description',
-			price: '€79',
+			price: '€19.99',
 			recommended: true,
 			featureKeys: [
 				'billing.plans.pro.features.0',
@@ -189,7 +189,13 @@ interface BillingPlanOption {
 
 	private buildReturnUrl(path: string): string {
 		const origin = globalThis.window?.location.origin ?? 'http://localhost:4200';
-		return new URL(path, origin).toString();
+		const url = new URL(path, origin);
+		if (path.includes('/billing/success')) {
+			// Stripe substitutes the real id for this placeholder so the success
+			// page can confirm the session with the backend on return.
+			url.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
+		}
+		return url.toString().replace('%7BCHECKOUT_SESSION_ID%7D', '{CHECKOUT_SESSION_ID}');
 	}
 
 	private redirectToCheckout(checkoutUrl: string): void {
